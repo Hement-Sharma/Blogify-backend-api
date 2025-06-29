@@ -6,6 +6,7 @@ import com.telusko.paylods.UserDto;
 import com.telusko.repositery.UserRepo;
 import com.telusko.service.UserService;
 import org.hibernate.annotations.NaturalId;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
    private UserRepo repo;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @Override
     public UserDto createUser(UserDto userDto) {
@@ -64,25 +68,17 @@ public class UserServiceImpl implements UserService {
     }
 
     public User userDtoToUser(UserDto userDto){
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        user.setAbout(userDto.getAbout());
 
-        return user;
+      User user = mapper.map(userDto,User.class);  //user Dto -> userDto->User
+        return  user;
+
     }
 
     public UserDto userToUserDto(User user){
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
-        userDto.setAbout(user.getAbout());
 
-        return userDto;
+        UserDto userDto = mapper.map(user,UserDto.class);  //user -> userDto
+        return  userDto;
     }
+
 
 }
