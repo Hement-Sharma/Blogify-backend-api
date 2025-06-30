@@ -4,6 +4,7 @@ import com.telusko.entities.User;
 import com.telusko.paylods.ApiResponse;
 import com.telusko.paylods.UserDto;
 import com.telusko.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -20,13 +21,13 @@ public class UserCotroller {
     UserService service;
 
     @PostMapping("user")
-    public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> addUser(@Valid @RequestBody UserDto userDto){
       UserDto savedUser =  service.createUser(userDto);
       return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
     }
 
     @PutMapping("user/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable int userId){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable int userId){
        UserDto updatedUser = service.updateUser(userDto,userId);
        return ResponseEntity.ok(updatedUser); //returning updatedUser and status(OK)
     }

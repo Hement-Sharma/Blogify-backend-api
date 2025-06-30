@@ -14,8 +14,8 @@ public class BlogAppBackendApiApplication {
 		SpringApplication.run(BlogAppBackendApiApplication.class, args);
 	}
 
-	@Bean // @SpringBootApplication --> This annotation also treated as @Configuration (so you can define Beans for Ioc)
-    public ModelMapper modelMapper(){        //We can declear our own config class...
+	@Bean
+    public ModelMapper modelMapper(){
 		return new ModelMapper();
 	}
 
